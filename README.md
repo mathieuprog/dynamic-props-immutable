@@ -1,11 +1,11 @@
-# `dynamic-props`
+# `dynamic-props-immutable`
 
-`dynamic-props` allows to create and delete nested properties of object literals dynamically.
+`dynamic-props-immutable` allows to create and delete nested properties of object literals dynamically.
 
 ## Usage
 
 ```javascript
-import { setNestedProp } from 'dynamic-props';
+import { setNestedProp } from 'dynamic-props-immutable';
 
 const foo = {};
 
@@ -17,7 +17,7 @@ console.log(foo);
 > { bar: { baz: [ <2 empty items>, { qux: 'hello' } ] } }
 
 ```javascript
-import { deleteNestedProp } from 'dynamic-props';
+import { deleteNestedProp } from 'dynamic-props-immutable';
 
 deleteNestedProp`bar.baz[${2}].qux`(foo);
 
@@ -34,8 +34,8 @@ Arrays of arrays are not supported (because I don't personally need it, PR welco
 
 ## Installation
 
-You can get `dynamic-props` via [npm](http://npmjs.com).
+You can get `dynamic-props-immutable` via [npm](http://npmjs.com).
 
 ```bash
-$ npm install dynamic-props --save
+$ npm install dynamic-props-immutable --save
 ```

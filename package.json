@@ -1,6 +1,6 @@
 {
-  "name": "dynamic-props",
-  "version": "0.3.0",
+  "name": "dynamic-props-immutable",
+  "version": "0.2.0",
   "description": "Set and delete nested properties",
   "scripts": {
     "test": "jest"
@@ -14,7 +14,7 @@
   "main": "src/index.js",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/mathieuprog/dynamic-props.git"
+    "url": "git+https://github.com/mathieuprog/dynamic-props-immutable.git"
   },
   "keywords": [
     "dynamic props"
@@ -22,7 +22,7 @@
   "author": "Mathieu Decaffmeyer",
   "license": "Apache-2.0",
   "bugs": {
-    "url": "https://github.com/mathieuprog/dynamic-props/issues"
+    "url": "https://github.com/mathieuprog/dynamic-props-immutable/issues"
   },
-  "homepage": "https://github.com/mathieuprog/dynamic-props#readme"
+  "homepage": "https://github.com/mathieuprog/dynamic-props-immutable#readme"
 }
