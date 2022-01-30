@@ -7,7 +7,7 @@
 ```javascript
 import { setNestedProp } from 'dynamic-props-immutable';
 
-const foo = {};
+let foo = {};
 
 foo = setNestedProp`bar.baz[${2}].qux`(foo, 'hello');
 
