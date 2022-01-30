@@ -34,6 +34,10 @@ test('setNestedProp', () => {
   expect(newFoo3.bar.baz).not.toBe(newFoo4.bar.baz);
   expect(newFoo3.bar.baz[2]).not.toBe(newFoo4.bar.baz[2]);
   expect(newFoo3.bar.baz[1]).toBe(newFoo4.bar.baz[1]);
+
+  expect(() => {
+    setNestedProp`bar.baz[${2}][${0}].qux`(newFoo4, 'hello');
+  }).toThrow();
 });
 
 test('deleteNestedProp', () => {
@@ -154,4 +158,12 @@ test('deleteNestedProp 8', () => {
   expect(foo.bar.baz).toEqual([ 1, 2, 3 ]);
   expect(isObjectLiteral(newFoo.bar)).toBeTruthy();
   expect(isObjectLiteral(foo.bar)).toBeTruthy();
+});
+
+test('deleteNestedProp 9', () => {
+  const foo = { bar: { baz: [ 1, 2, [3, 4] ] } };
+
+  expect(() => {
+    deleteNestedProp`bar.baz[${1}][${2}]`(foo);
+  }).toThrow();
 });
