@@ -17,7 +17,7 @@ const setNestedProp = (path, ...indexes) => {
         if (!getObject()[key]) {
           getObject()[key] = [];
         } else {
-          getObject()[key] = [ ...getObject()[key] ];
+          getObject()[key] = [...getObject()[key]];
         }
         const index = indexes.shift();
         if (isLastProp) {
@@ -57,7 +57,9 @@ const isEmpty = item => {
 const deleteNestedProp = (path, ...indexes) => {
   const splitPath = path.join('').split('.');
 
-  return originalObject => {
+  return (originalObject, options = {}) => {
+    const { resizeArray } = options;
+
     let object = { ...originalObject };
 
     let getObject = () => object;
@@ -73,44 +75,57 @@ const deleteNestedProp = (path, ...indexes) => {
 
       if (key.slice(-1) === ']') {
         key = key.slice(0, -2);
-        if (!getObject()[key]) {
+        if (!_getObject()[key]) {
           break;
         }
         const index = indexes.shift();
-        if (!getObject()[key][index]) {
+        if (!_getObject()[key][index]) {
           break;
         } else if (isLastProp) {
-          getObject()[key] = [ ...getObject()[key] ];
-          delete getObject()[key][index];
-          if (!getObject()[key].some(e => e !== undefined)) {
+          const o = _getObject();
+          o[key] = [...o[key]];
+          if (resizeArray) {
+            o[key].splice(index, 1);
+          } else {
+            delete o[key][index];
+          }
+          if (!o[key].some(e => e !== undefined)) {
             deleteKeyAndCleanRecursively(key);
           }
         } else {
           // copy for closure
-          const o = getObject();
+          const o = _getObject();
           const prevDeleteKeyAndCleanRecursively = deleteKeyAndCleanRecursively;
           deleteKeyAndCleanRecursively = keyToDelete => {
-            o[key] = [ ...o[key] ];
+            o[key] = [...o[key]];
             o[key][index] = { ...o[key][index] };
             delete o[key][index][keyToDelete];
 
             if (isEmpty(o[key][index])) {
-              delete o[key][index];
+              if (resizeArray) {
+                o[key].splice(index, 1);
+              } else {
+                delete o[key][index];
+              }
               if (isEmpty(o[key])) {
                 prevDeleteKeyAndCleanRecursively(key);
               }
             }
           };
-          getObject = () => _getObject()[key][index];
+          getObject = () => {
+            o[key] = [...o[key]];
+            o[key][index] = { ...o[key][index] };
+            return o[key][index];
+          };
         }
       } else {
-        if (!getObject()[key]) {
+        if (!_getObject()[key]) {
           break;
         } else if (isLastProp) {
           deleteKeyAndCleanRecursively(key);
         } else {
           // copy for closure
-          const o = getObject();
+          const o = _getObject();
           const prevDeleteKeyAndCleanRecursively = deleteKeyAndCleanRecursively;
           deleteKeyAndCleanRecursively = keyToDelete => {
             o[key] = { ...o[key] };
@@ -120,7 +135,10 @@ const deleteNestedProp = (path, ...indexes) => {
               prevDeleteKeyAndCleanRecursively(key);
             }
           };
-          getObject = () => _getObject()[key];
+          getObject = () => {
+            o[key] = { ...o[key] };
+            return o[key];
+          };
         }
       }
     }
