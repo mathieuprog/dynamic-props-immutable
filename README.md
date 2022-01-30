@@ -9,7 +9,7 @@ import { setNestedProp } from 'dynamic-props-immutable';
 
 const foo = {};
 
-setNestedProp`bar.baz[${2}].qux`(foo, 'hello');
+foo = setNestedProp`bar.baz[${2}].qux`(foo, 'hello');
 
 console.log(foo);
 ```
@@ -19,7 +19,7 @@ console.log(foo);
 ```javascript
 import { deleteNestedProp } from 'dynamic-props-immutable';
 
-deleteNestedProp`bar.baz[${2}].qux`(foo);
+foo = deleteNestedProp`bar.baz[${2}].qux`(foo);
 
 console.log(foo);
 ```
